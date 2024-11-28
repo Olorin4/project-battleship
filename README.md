@@ -1,10 +1,6 @@
-Project Title
+Battleship
 
 **Description**:
-Description.
-
-**Features**:
-
-1. **Feature 1**:
-
-2. **Feature 2**:
+This is an implementation of the classic board game Battleship.
+You can read about Battleship’s rules here: https://en.wikipedia.org/wiki/Battleship_(game).
+The purpose of this project is to become comfortable with TDD.
