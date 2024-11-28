@@ -1,11 +1,11 @@
 {
-    "name": "project-template",
+    "name": "project-battleship",
     "version": "1.0.0",
     "description": "",
     "private": true,
     "main": "index.js",
     "scripts": {
-        "test": "jest",
+        "test": "jest --coverage",
         "watch": "webpack --watch",
         "start": "webpack serve --config webpack.dev.js --open",
         "build": "webpack --config webpack.prod.js",

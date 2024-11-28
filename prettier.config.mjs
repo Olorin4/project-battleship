@@ -7,7 +7,7 @@
 const config = {
     trailingComma: "es5",
     tabWidth: 4,
-    printWidth: 80,
+    printWidth: 100,
     semi: true,
     singleQuote: false,
     quoteProps: "as-needed",

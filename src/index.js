@@ -1,18 +1,25 @@
 import "./normalize.css";
 import "./styles.css";
-import { fetchData } from "./api-access";
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetchData();
-});
+document.addEventListener("DOMContentLoaded", () => {});
 
 // TO DO:
-// - Fetch weather data from Visual Crossing API.
-// - Add ability to search for a specific location and toggle displaying
-// - the data in Fahrenheit or Celsius.
-// - Process the JSON data from the API and return an object the data required by the app.
-// - Change the look of the page based on the data (maybe use Giphy API).
-// - Set up a form that will let users input their location and will fetch the weather info.
-// - Display the information on the webpage.
-// - Add styling.
-// - Optional: add a ‘loading’ component.
+
+/* 1. Create a Ship class.
+- Include their length, the number of times they’ve been hit and whether or not they’ve been sunk.
+- Ships should have a hit() function that increases the number of ‘hits’ in your ship.
+- isSunk() should be a function that calculates whether a ship is considered sunk based on its length and the number of hits it has received. */
+
+/* 2. Create a Gameboard class.
+- Gameboards should be able to place ships at specific coordinates by calling the ship class.
+- Gameboards should have a receiveAttack function that takes a pair of coordinates, determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot.
+- Gameboards should keep track of missed attacks so they can display them properly. */
+
+/* 3. Create a Player class.
+- There will be two types of players in the game, ‘real’ players and ‘computer’ players. */
+
+/* 4. Import your classes into another file, and drive the game using event listeners to interact with your objects. Create a module that helps you manage actions that should happen in the DOM.
+- At this point it is appropriate to begin crafting your User Interface.
+- Set up a new game by creating Players */
+
+/* 5. Finish it up by implementing a system that allows players to place their ships. For example, you can let them type coordinates for each ship or have a button to cycle through random placements. */
