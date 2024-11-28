@@ -1,5 +1,6 @@
 import "./normalize.css";
 import "./styles.css";
+import { Ship } from "./classes";
 
 document.addEventListener("DOMContentLoaded", () => {});
 

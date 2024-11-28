@@ -16,9 +16,16 @@ export default [
     },
     {
         files: ["tests/**/*"], // Adjust the pattern as needed
-        plugins: { jest: jestPlugin, },
-        "env": { "jest/globals": true},
-        languageOptions: { globals: jestPlugin.environments.globals, // Jest globals},
+        plugins: {
+            jest: jestPlugin,
+        },
+        env: {
+            "jest/globals": true,
+            node: true,
+        },
+        languageOptions: {
+            globals: jestPlugin.environments.globals, // Jest globals
+        },
         rules: {
             ...jestPlugin.configs.recommended.rules, // Recommended Jest rules
         },
