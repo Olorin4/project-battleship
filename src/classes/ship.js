@@ -5,17 +5,17 @@
 
 export class Ship {
     constructor(positions) {
-        this.positions = positions; // Array of positions, e.g., ["A1", "A2", "A3"]
-        this.receivedHits = new Set(); // Tracks positions hit
+        this.hull = positions; // Array of positions, e.g., ["A1", "A2", "A3"]
+        this.totalHits = new Set(); // Tracks positions hit
     }
 
     hit(position) {
-        if (this.positions.includes(position)) {
-            this.receivedHits.add(position);
+        if (this.hull.includes(position)) {
+            this.totalHits.add(position);
         }
     }
 
     isSunk() {
-        return this.receivedHits.size === this.positions.length;
+        return this.totalHits.size === this.hull.length;
     }
 }
