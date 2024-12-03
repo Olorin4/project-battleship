@@ -6,22 +6,55 @@
 import { Ship } from "./ship";
 
 export class Gameboard {
-    constructor() {
+    constructor(size = 10) {
+        this.size = size;
         this.fleet = []; // Array of Ship objects with their positions
         this.missedShots = new Set(); // Set of missed attack coordinates
+        this.board = this.createBoard();
     }
 
-    placeShip(positions) {
-        const newShip = new Ship(positions);
+    // Method to create a grid of a given size (e.g., 10x10 or 12x12)
+    createBoard() {
+        const board = [];
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".slice(0, this.size);
+        for (let row = 0; row < this.size; row++) {
+            const rowData = [];
+            for (let col = 1; col <= this.size; col++) {
+                const coordinate = `${alphabet[row]}${col}`; // Generate coordinates like A1, B2, C10, etc.
+                rowData.push(coordinate);
+            }
+            board.push(rowData);
+        }
+        return board;
+    }
+
+    // Helper method to validate coordinates
+    validate(coordinate) {
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".slice(0, this.size);
+        const letter = coordinate[0].toUpperCase();
+        const number = parseInt(coordinate.slice(1), 10);
+        // Ensure the letter is within the valid range (e.g., A-J for 10x10)
+        if (alphabet.indexOf(letter) === -1 || number < 1 || number > this.size) {
+            throw new Error("Invalid coordinate");
+        }
+        return;
+    }
+
+    // Method to place a ship on the board (given an array of coordinates)
+    placeShip(coordinates) {
+        coordinates.forEach(this.validate.bind(this));
+        const newShip = new Ship(coordinates);
         this.fleet.push(newShip);
         return newShip;
     }
 
-    receiveAttack(coordinate) {
+    // Method to receive an attack at a coordinate
+    receivedAttackAt(coordinate) {
+        this.validate(coordinate);
         // Check if any ship occupies the attacked coordinate
         for (const ship of this.fleet) {
             if (ship.hull.includes(coordinate)) {
-                ship.hit(coordinate); // Mark the hit on the correct ship
+                ship.hitAt(coordinate); // Mark the hit on the correct ship
                 return "hit";
             }
         }
@@ -30,8 +63,8 @@ export class Gameboard {
         return "miss";
     }
 
+    // Method to check if all ships are sunk
     fleetSunk() {
-        // Check if all ships on the board are sunk
         return this.fleet.every((ship) => ship.isSunk());
     }
 }

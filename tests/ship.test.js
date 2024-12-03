@@ -15,49 +15,49 @@ describe("Ship class", () => {
     });
 
     test("records a hit on a valid position", () => {
-        ship.hit("A1");
+        ship.hitAt("A1");
         expect(ship.totalHits.has("A1")).toBe(true);
         expect(ship.totalHits.size).toBe(1);
     });
 
     test("does not record a hit on an invalid position", () => {
-        ship.hit("B1");
+        ship.hitAt("B1");
         expect(ship.totalHits.has("B1")).toBe(false);
         expect(ship.totalHits.size).toBe(0);
     });
 
     test("handles multiple hits on different valid positions", () => {
-        ship.hit("A1");
-        ship.hit("A2");
+        ship.hitAt("A1");
+        ship.hitAt("A2");
         expect(ship.totalHits.has("A1")).toBe(true);
         expect(ship.totalHits.has("A2")).toBe(true);
         expect(ship.totalHits.size).toBe(2);
     });
 
     test("ignores duplicate hits on the same position", () => {
-        ship.hit("A1");
-        ship.hit("A1");
+        ship.hitAt("A1");
+        ship.hitAt("A1");
         expect(ship.totalHits.has("A1")).toBe(true);
         expect(ship.totalHits.size).toBe(1);
     });
 
     test("isSunk returns false when not all positions are hit", () => {
-        ship.hit("A1");
-        ship.hit("A2");
+        ship.hitAt("A1");
+        ship.hitAt("A2");
         expect(ship.isSunk()).toBe(false);
     });
 
     test("isSunk returns true when all positions are hit", () => {
-        ship.hit("A1");
-        ship.hit("A2");
-        ship.hit("A3");
+        ship.hitAt("A1");
+        ship.hitAt("A2");
+        ship.hitAt("A3");
         expect(ship.isSunk()).toBe(true);
     });
 
     test("isSunk works correctly with out-of-order hits", () => {
-        ship.hit("A3");
-        ship.hit("A1");
-        ship.hit("A2");
+        ship.hitAt("A3");
+        ship.hitAt("A1");
+        ship.hitAt("A2");
         expect(ship.isSunk()).toBe(true);
     });
 });

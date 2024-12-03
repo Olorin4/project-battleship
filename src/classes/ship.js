@@ -4,14 +4,14 @@
 - isSunk() should be a function that calculates whether a ship is considered sunk based on its length and the number of hits it has received. */
 
 export class Ship {
-    constructor(positions) {
-        this.hull = positions; // Array of positions, e.g., ["A1", "A2", "A3"]
-        this.totalHits = new Set(); // Tracks positions hit
+    constructor(coordinates) {
+        this.hull = coordinates; // Array of coordinates, e.g., ["A1", "A2", "A3"]
+        this.totalHits = new Set(); // Tracks coordinates hit
     }
 
-    hit(position) {
-        if (this.hull.includes(position)) {
-            this.totalHits.add(position);
+    hitAt(coordinate) {
+        if (this.hull.includes(coordinate)) {
+            this.totalHits.add(coordinate);
         }
     }
 

@@ -11,33 +11,35 @@ export class Player {
         }
         this.type = type; // 'human' or 'computer'
         this.gameboard = new Gameboard(); // Each player has their own gameboard
+        this.attackLog = new Set(); // Tracks all coordinates attacked by this player
     }
 
     attack(opponent, coordinate = null) {
         if (this.type === "human") {
-            if (!coordinate) {
+            if (!coordinate)
                 throw new Error("Human players must provide a coordinate for the attack.");
-            }
-            return opponent.gameboard.receiveAttack(coordinate);
+            if (this.attackLog.has(coordinate))
+                throw new Error("This coordinate has already been attacked.");
+            this.attackLog.add(coordinate);
+            return opponent.gameboard.receivedAttackAt(coordinate);
         } else if (this.type === "computer") {
-            const randomCoordinate = this.getRandomCoordinate(opponent.gameboard);
-            return opponent.gameboard.receiveAttack(randomCoordinate);
+            const randomCoordinate = this.getRandomCoordinateOf(opponent.gameboard);
+            this.attackLog.add(randomCoordinate);
+            return opponent.gameboard.receivedAttackAt(randomCoordinate);
         }
     }
 
-    getRandomCoordinate(gameboard) {
-        const alphabet = "ABCDEFGHIJ";
-        const row = alphabet[Math.floor(Math.random() * 10)];
-        const column = Math.floor(Math.random() * 10) + 1;
+    getRandomCoordinateOf(gameboard) {
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".slice(0, gameboard.size);
+        const row = alphabet[Math.floor(Math.random() * gameboard.size)]; // Random letter
+        const column = Math.floor(Math.random() * gameboard.size) + 1; // Random number
         const coordinate = `${row}${column}`;
-        // Ensure the computer doesn't attack the same spot twice
+        // Ensure the coordinate is not already attacked or hit
         if (
             gameboard.missedShots.has(coordinate) ||
-            gameboard.fleet.some(
-                (ship) => ship.hull.includes(coordinate) && ship.totalHits.has(coordinate)
-            )
+            gameboard.fleet.some((ship) => ship.totalHits.has(coordinate))
         ) {
-            return this.getRandomCoordinate(gameboard); // Recursively find a new coordinate
+            return this.getRandomCoordinateOf(gameboard); // Recursively find a new coordinate
         }
         return coordinate;
     }

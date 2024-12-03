@@ -1,27 +1,20 @@
 <!doctype html>
 <html lang="en">
-        <head>
-                <meta charset="UTF-8" />
-                <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1.0"
-                />
-                <title><%= htmlWebpackPlugin.options.title %></title>
-        </head>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title><%= htmlWebpackPlugin.options.title %></title>
+    </head>
 
-        <body>
-                <header>
-                        <nav class="nav-bar-1"></nav>
-                </header>
-                <!-- END OF NAVBAR    -->
-
-                <section class="dashboard"></section>
-                <!-- END OF DASHBOARD    -->
-
-                <section class="main-content"></section>
-                <!-- END OF MAIN CONTENT    -->
-
-                <section class="right-sidebar"></section>
-                <!-- END OF RIGHT SIDEBAR    -->
-        </body>
+    <body>
+        <div id="game-container">
+            <h1>Battleship</h1>
+            <div class="boards">
+                <div id="player-board" class="board"></div>
+                <div id="computer-board" class="board"></div>
+            </div>
+            <div id="message"></div>
+            <button id="restart">Restart</button>
+        </div>
+    </body>
 </html>
