@@ -1,20 +1,68 @@
 // dom.js will handle rendering and user interaction.
 
-function renderGameboard(gameboard, container) {
-    // Set up the container as a grid
-    container.style.display = "grid";
-    container.style.gridTemplateColumns = `repeat(${gameboard.size}, 1fr)`;
-    container.style.gridGap = "1px";
-    // Iterate over the gameboard rows and columns
+function render(gameboard, container) {
+    container.innerHTML = ""; // Clear the board
+    // Render cells
     gameboard.board.forEach((row) => {
         row.forEach((coordinate) => {
             const cell = document.createElement("div");
             cell.classList.add("cell");
             cell.dataset.coordinate = coordinate; // Store coordinate in a data attribute
-            cell.textContent = coordinate; // Optional: Show the coordinate for debugging
             container.appendChild(cell);
         });
     });
+}
+
+function playerAttack(player, opponent) {
+    const playerBoard = document.getElementById("player-board");
+    playerBoard.addEventListener("click", (event) => {
+        const cell = event.target;
+        // Ensure clicks only affect valid cells
+        if (cell.classList.contains("cell")) {
+            const coordinate = cell.dataset.coordinate;
+            try {
+                // Player attacks opponent
+                const result = player.attack(opponent, coordinate);
+                // Update the UI based on the attack result
+                cell.classList.add(result);
+                // Check if the game is over
+                if (opponent.gameboard.fleetSunk()) alert(`${player.type} wins!`);
+                else computerAttack(opponent, player);
+            } catch (error) {
+                // Handle errors from the `player.attack` method
+                alert(error.message);
+            }
+        }
+    });
+}
+
+function computerAttack(computer, opponent) {
+    // Simulate computer attack
+    const coordinate = computer.getRandomCoordinateOf(opponent.gameboard);
+    const result = computer.attack(opponent, coordinate);
+    // Find and update the corresponding cell in the DOM
+    const playerBoard = document.getElementById("player-board");
+    const cell = [...playerBoard.querySelectorAll(".cell")].find(
+        (cell) => cell.dataset.coordinate === coordinate
+    );
+    cell.classList.add(result);
+    // Check if the game is over
+    if (opponent.gameboard.fleetSunk()) alert(`${computer.type} wins!`);
+}
+
+function resetGame(player, opponent) {
+    const playerBoard = document.getElementById("player-board");
+    const computerBoard = document.getElementById("computer-board");
+    // Remove previous event listeners
+    playerBoard.innerHTML = "";
+    computerBoard.innerHTML = "";
+    // Re-render gameboards with new listeners
+    render(player.gameboard, playerBoard);
+    render(opponent.gameboard, computerBoard);
+    // Attach the player attack event listener again
+    playerAttack(player, opponent);
+    // Optionally, reset game state variables
+    // For example, reset the attack logs, hit/miss counts, etc.
 }
 
 function displayShipPlacements(gameboard, container, isPlayer = true) {
@@ -29,16 +77,4 @@ function displayShipPlacements(gameboard, container, isPlayer = true) {
     });
 }
 
-function updateCell(container, coordinate, result) {
-    const cell = container.querySelector(`[data-coordinate="${coordinate}"]`);
-    if (cell) {
-        cell.classList.add(result); // Adds "hit" or "miss"
-    }
-}
-
-function resetBoards(playerContainer, computerContainer) {
-    playerContainer.innerHTML = "";
-    computerContainer.innerHTML = "";
-}
-
-export { renderGameboard, updateCell, resetBoards, displayShipPlacements };
+export { render, playerAttack, resetGame };

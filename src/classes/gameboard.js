@@ -6,7 +6,7 @@
 import { Ship } from "./ship";
 
 export class Gameboard {
-    constructor(size = 10) {
+    constructor(size) {
         this.size = size;
         this.fleet = []; // Array of Ship objects with their positions
         this.missedShots = new Set(); // Set of missed attack coordinates

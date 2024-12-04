@@ -54,3 +54,44 @@ button {
     border: 1px solid #004080; /* Slightly darker border for clarity */
     opacity: 0.8; /* Makes the ships slightly translucent */
 }
+
+/* Basic styling for the gameboard */
+#playerBoard,
+#computerBoard {
+    display: grid;
+    grid-template-columns: repeat(10, 40px); /* Adjust to your board size (10x10 for example) */
+    grid-template-rows: repeat(10, 40px);
+    gap: 2px;
+    margin: 10px;
+}
+
+/* Style for each cell */
+.cell {
+    width: 40px; /* Make each cell 40px wide */
+    height: 40px; /* Make each cell 40px tall */
+    background-color: lightgray; /* Default cell color */
+    border: 1px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Highlight cell when the player clicks it (for attacking) */
+.cell.clicked {
+    background-color: rgba(255, 0, 0, 0.6); /* Red when clicked */
+}
+
+/* Example of ship placement (could add a class here dynamically) */
+.cell.ship {
+    background-color: #2a7f62; /* Example ship color */
+}
+
+/* Example of a hit or miss (could add these dynamically based on game logic) */
+.cell.hit {
+    background-color: red; /* For a hit */
+}
+
+.cell.miss {
+    background-color: blue; /* For a miss */
+}

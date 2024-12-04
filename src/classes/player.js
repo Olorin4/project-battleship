@@ -5,12 +5,12 @@
 import { Gameboard } from "./gameboard";
 
 export class Player {
-    constructor(type = "human") {
+    constructor(type = "human", size = 10) {
         if (!["human", "computer"].includes(type)) {
             throw new Error("Invalid player type. Must be 'human' or 'computer'.");
         }
         this.type = type; // 'human' or 'computer'
-        this.gameboard = new Gameboard(); // Each player has their own gameboard
+        this.gameboard = new Gameboard(size); // Each player has their own gameboard
         this.attackLog = new Set(); // Tracks all coordinates attacked by this player
     }
 
