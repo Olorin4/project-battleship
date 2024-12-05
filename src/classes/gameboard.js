@@ -28,26 +28,6 @@ export class Gameboard {
         return board;
     }
 
-    // Helper method to validate coordinates
-    validate(coordinate) {
-        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".slice(0, this.size);
-        const letter = coordinate[0].toUpperCase();
-        const number = parseInt(coordinate.slice(1), 10);
-        // Ensure the letter is within the valid range (e.g., A-J for 10x10)
-        if (alphabet.indexOf(letter) === -1 || number < 1 || number > this.size) {
-            throw new Error("Invalid coordinate");
-        }
-        return;
-    }
-
-    // Method to place a ship on the board (given an array of coordinates)
-    placeShip(coordinates) {
-        coordinates.forEach(this.validate.bind(this));
-        const newShip = new Ship(coordinates);
-        this.fleet.push(newShip);
-        return newShip;
-    }
-
     // Method to receive an attack at a coordinate
     receivedAttackAt(coordinate) {
         this.validate(coordinate);
@@ -66,5 +46,25 @@ export class Gameboard {
     // Method to check if all ships are sunk
     fleetSunk() {
         return this.fleet.every((ship) => ship.isSunk());
+    }
+
+    // Method to place a ship on the board (given an array of coordinates)
+    placeShip(coordinates) {
+        coordinates.forEach(this.validate.bind(this));
+        const newShip = new Ship(coordinates);
+        this.fleet.push(newShip);
+        return newShip;
+    }
+
+    // Helper method to validate coordinates
+    validate(coordinate) {
+        const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".slice(0, this.size);
+        const letter = coordinate[0].toUpperCase();
+        const number = parseInt(coordinate.slice(1), 10);
+        // Ensure the letter is within the valid range (e.g., A-J for 10x10)
+        if (alphabet.indexOf(letter) === -1 || number < 1 || number > this.size) {
+            throw new Error("Invalid coordinate");
+        }
+        return;
     }
 }

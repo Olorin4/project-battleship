@@ -3,10 +3,16 @@ import "./styles.css";
 import { Player } from "./classes/player";
 import { render } from "./dom";
 
-// Example initialization
 function initializeGame() {
     const player = new Player("human");
     const computer = new Player("computer");
+    // Place random ships for both players
+    player.placeRandomShip(5);
+    player.placeRandomShip(4);
+    player.placeRandomShip(3);
+    computer.placeRandomShip(5);
+    computer.placeRandomShip(4);
+    computer.placeRandomShip(3);
     render(player, computer);
     render(computer, player);
     document.getElementById("restart").addEventListener("click", initializeGame);

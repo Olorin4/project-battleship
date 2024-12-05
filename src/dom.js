@@ -10,6 +10,10 @@ function render(player, opponent) {
             cell.classList.add("cell");
             cell.dataset.coordinate = coordinate; // Store coordinate in a data attribute
             board.appendChild(cell);
+            // Check if the cell is part of a ship
+            player.gameboard.fleet.forEach((ship) => {
+                if (ship.hull.includes(coordinate)) cell.classList.add("ship");
+            });
             if (player.type === "computer") {
                 cell.addEventListener("click", (event) => {
                     const clickedCell = event.target;
@@ -61,34 +65,6 @@ function displayShipPlacements(gameboard, container, isPlayer = true) {
                 cell.classList.add("ship"); // Add the ship class for visualization
             }
         });
-    });
-}
-
-function randomPlacement(gameboard, shipSizes) {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".slice(0, gameboard.size);
-    shipSizes.forEach((size) => {
-        let placed = false;
-        while (!placed) {
-            const startRow = Math.floor(Math.random() * gameboard.size);
-            const startCol = Math.floor(Math.random() * gameboard.size);
-            const isHorizontal = Math.random() > 0.5;
-            const coordinates = [];
-            for (let i = 0; i < size; i++) {
-                const row = isHorizontal ? startRow : startRow + i;
-                const col = isHorizontal ? startCol + i : startCol;
-                if (row >= gameboard.size || col >= gameboard.size) break;
-                coordinates.push(`${alphabet[row]}${col + 1}`);
-            }
-            if (
-                coordinates.length === size &&
-                !gameboard.fleet.some((ship) =>
-                    ship.hull.some((coord) => coordinates.includes(coord))
-                )
-            ) {
-                gameboard.placeShip(coordinates);
-                placed = true;
-            }
-        }
     });
 }
 
