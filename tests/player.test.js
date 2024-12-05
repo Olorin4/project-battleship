@@ -11,12 +11,9 @@ describe("Player class", () => {
         opponent.gameboard.placeShip(["A1", "A2", "A3"]);
     });
 
-    test("creates a human player with a gameboard", () => {
+    test("creates a human or a computer player with a gameboard", () => {
         expect(player1.type).toBe("human");
         expect(player1.gameboard).toBeInstanceOf(Gameboard);
-    });
-
-    test("creates a computer player with a gameboard", () => {
         expect(computerPlayer.type).toBe("computer");
         expect(computerPlayer.gameboard).toBeInstanceOf(Gameboard);
     });
@@ -25,12 +22,6 @@ describe("Player class", () => {
         const result = player1.attack(opponent, "A1");
         expect(result).toBe("hit"); // Attack hits the opponent's ship
         expect(opponent.gameboard.fleet[0].totalHits.has("A1")).toBe(true); // Marked as hit
-    });
-
-    test("throws an error if human player does not provide a coordinate", () => {
-        expect(() => player1.attack(opponent)).toThrow(
-            "Human players must provide a coordinate for the attack."
-        );
     });
 
     test("computer player attacks the opponent at a random coordinate", () => {

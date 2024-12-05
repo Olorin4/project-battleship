@@ -6,9 +6,8 @@ import { Gameboard } from "./gameboard";
 
 export class Player {
     constructor(type = "human", size = 10) {
-        if (!["human", "computer"].includes(type)) {
+        if (!["human", "computer"].includes(type))
             throw new Error("Invalid player type. Must be 'human' or 'computer'.");
-        }
         this.type = type; // 'human' or 'computer'
         this.gameboard = new Gameboard(size); // Each player has their own gameboard
         this.attackLog = new Set(); // Tracks all coordinates attacked by this player
@@ -16,8 +15,6 @@ export class Player {
 
     attack(opponent, coordinate = null) {
         if (this.type === "human") {
-            if (!coordinate)
-                throw new Error("Human players must provide a coordinate for the attack.");
             if (this.attackLog.has(coordinate))
                 throw new Error("This coordinate has already been attacked.");
             this.attackLog.add(coordinate);
@@ -35,12 +32,7 @@ export class Player {
         const column = Math.floor(Math.random() * gameboard.size) + 1; // Random number
         const coordinate = `${row}${column}`;
         // Ensure the coordinate is not already attacked or hit
-        if (
-            gameboard.missedShots.has(coordinate) ||
-            gameboard.fleet.some((ship) => ship.totalHits.has(coordinate))
-        ) {
-            return this.getRandomCoordinateOf(gameboard); // Recursively find a new coordinate
-        }
+        if (this.attackLog.has(coordinate)) return this.getRandomCoordinateOf(gameboard);
         return coordinate;
     }
 }
