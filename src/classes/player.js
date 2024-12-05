@@ -82,7 +82,7 @@ export class Player {
             }
             // Check for overlap with existing ships
             for (const ship of this.gameboard.fleet) {
-                if (ship.hull.includes(coordinate)) {
+                if (ship.position.includes(coordinate)) {
                     return false; // Overlapping with an existing ship
                 }
             }

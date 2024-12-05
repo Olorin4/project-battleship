@@ -9,7 +9,7 @@ describe("Ship class", () => {
     });
 
     test("initializes new Ship with given positions and no received hits", () => {
-        expect(ship.hull).toEqual(["A1", "A2", "A3"]);
+        expect(ship.position).toEqual(["A1", "A2", "A3"]);
         expect(ship.totalHits.size).toBe(0);
         expect(ship.isSunk()).toBe(false);
     });

@@ -12,7 +12,7 @@ function render(player, opponent) {
             board.appendChild(cell);
             // Check if the cell is part of a ship
             player.gameboard.fleet.forEach((ship) => {
-                if (ship.hull.includes(coordinate)) cell.classList.add("ship");
+                if (ship.position.includes(coordinate)) cell.classList.add("ship");
             });
             if (player.type === "computer") {
                 cell.addEventListener("click", (event) => {
@@ -59,7 +59,7 @@ function computerAttack(computer, opponent) {
 function displayShipPlacements(gameboard, container, isPlayer = true) {
     if (!isPlayer) return; // Skip displaying ships for the computer's board
     gameboard.fleet.forEach((ship) => {
-        ship.hull.forEach((coordinate) => {
+        ship.position.forEach((coordinate) => {
             const cell = container.querySelector(`[data-coordinate="${coordinate}"]`);
             if (cell) {
                 cell.classList.add("ship"); // Add the ship class for visualization

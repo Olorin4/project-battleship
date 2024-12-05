@@ -16,7 +16,7 @@ describe("Gameboard class with updated Ship implementation", () => {
 
     test("place a ship on the gameboard", () => {
         expect(gameboard.fleet).toContain(ship1);
-        expect(ship1.hull).toEqual(["A1", "A2", "A3"]);
+        expect(ship1.position).toEqual(["A1", "A2", "A3"]);
     });
 
     test("do not allow placing ships outside the gameboard", () => {

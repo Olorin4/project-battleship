@@ -33,7 +33,7 @@ export class Gameboard {
         this.validate(coordinate);
         // Check if any ship occupies the attacked coordinate
         for (const ship of this.fleet) {
-            if (ship.hull.includes(coordinate)) {
+            if (ship.position.includes(coordinate)) {
                 ship.hitAt(coordinate); // Mark the hit on the correct ship
                 return "hit";
             }

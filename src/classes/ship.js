@@ -5,17 +5,17 @@
 
 export class Ship {
     constructor(coordinates) {
-        this.hull = coordinates; // Array of coordinates, e.g., ["A1", "A2", "A3"]
+        this.position = coordinates; // Array of coordinates, e.g., ["A1", "A2", "A3"]
         this.totalHits = new Set(); // Tracks coordinates hit
     }
 
     hitAt(coordinate) {
-        if (this.hull.includes(coordinate)) {
+        if (this.position.includes(coordinate)) {
             this.totalHits.add(coordinate);
         }
     }
 
     isSunk() {
-        return this.totalHits.size === this.hull.length;
+        return this.totalHits.size === this.position.length;
     }
 }
