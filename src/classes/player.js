@@ -5,11 +5,9 @@
 import { Gameboard } from "./gameboard";
 
 export class Player {
-    constructor(type = "human", size = 10) {
-        if (!["human", "computer"].includes(type))
-            throw new Error("Invalid player type. Must be 'human' or 'computer'.");
-        this.type = type; // 'human' or 'computer'
-        this.gameboard = new Gameboard(size); // Each player has their own gameboard
+    constructor(type, size = 10) {
+        this.type = type; // human or computer
+        this.gameboard = new Gameboard(size, this.type);
         this.attackLog = new Set(); // Tracks all coordinates attacked by this player
     }
 
@@ -18,11 +16,13 @@ export class Player {
             if (this.attackLog.has(coordinate))
                 throw new Error("This coordinate has already been attacked.");
             this.attackLog.add(coordinate);
-            return opponent.gameboard.receivedAttackAt(coordinate);
+            const result = opponent.gameboard.receivedAttackAt(coordinate);
+            return { result, coordinate };
         } else if (this.type === "computer") {
             const randomCoordinate = this.getRandomCoordinateOf(opponent.gameboard);
             this.attackLog.add(randomCoordinate);
-            return opponent.gameboard.receivedAttackAt(randomCoordinate);
+            const result = opponent.gameboard.receivedAttackAt(randomCoordinate);
+            return { coordinate: randomCoordinate, result };
         }
     }
 
@@ -87,6 +87,6 @@ export class Player {
                 }
             }
         }
-        return true; // All checks passed
+        return true;
     }
 }

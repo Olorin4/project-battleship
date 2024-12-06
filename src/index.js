@@ -23,5 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // TO DO:
+/* 4. - Computer ships are not invisible.
+      - Write tests for player class. 
+      - Render messages */
 
 /* 5. Finish it up by implementing a system that allows players to place their ships. For example, you can let them type coordinates for each ship or have a button to cycle through random placements. */

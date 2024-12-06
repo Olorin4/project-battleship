@@ -6,8 +6,9 @@
 import { Ship } from "./ship";
 
 export class Gameboard {
-    constructor(size) {
+    constructor(size, type) {
         this.size = size;
+        this.type = type;
         this.fleet = []; // Array of Ship objects with their positions
         this.missedShots = new Set(); // Set of missed attack coordinates
         this.board = this.createBoard();
@@ -53,6 +54,9 @@ export class Gameboard {
         coordinates.forEach(this.validate.bind(this));
         const newShip = new Ship(coordinates);
         this.fleet.push(newShip);
+        console.log(
+            `${this.type} fleet after placement: ${this.fleet.map((ship) => ship.position)}`
+        );
         return newShip;
     }
 

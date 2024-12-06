@@ -43,8 +43,13 @@ button {
     font-size: 16px;
 }
 
-.ship {
-    background-color: #0d0d0e;
+.board .ship {
+    background-color: #7f7f83;
     border: 1px solid #004080;
-    opacity: 0.3; /* Makes the ships slightly translucent */
+}
+
+.ship,
+.computer {
+    background-color: lightblue;
+    border: 1px solid #000;
 }

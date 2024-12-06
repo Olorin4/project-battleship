@@ -19,14 +19,17 @@ describe("Player class", () => {
     });
 
     test("human player can attack an opponent", () => {
-        const result = player1.attack(opponent, "A1");
+        const { coordinate, result } = player1.attack(opponent, "A1");
+        expect(coordinate).toBe("A1"); // Ensure the coordinate is correct
         expect(result).toBe("hit"); // Attack hits the opponent's ship
         expect(opponent.gameboard.fleet[0].totalHits.has("A1")).toBe(true); // Marked as hit
     });
 
     test("computer player attacks the opponent at a random coordinate", () => {
-        expect(["hit", "miss"]).toContain(computerPlayer.attack(opponent)); // Attack result should be either "hit" or "miss"
-        // Ensure the attacked coordinate is logged
+        const { coordinate, result } = computerPlayer.attack(opponent);
+        expect(["hit", "miss"]).toContain(result); // Result should be "hit" or "miss"
+        expect(coordinate).toBeDefined(); // Ensure a coordinate is returned
+        expect(computerPlayer.attackLog.has(coordinate)).toBe(true); // The coordinate is logged
         expect(computerPlayer.attackLog.size).toBe(1); // The log should have exactly one entry
     });
 

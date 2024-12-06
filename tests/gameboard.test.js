@@ -19,6 +19,12 @@ describe("Gameboard class with updated Ship implementation", () => {
         expect(ship1.position).toEqual(["A1", "A2", "A3"]);
     });
 
+    test("add placed ships to the fleet", () => {
+        expect(gameboard.fleet).toContain(ship1);
+        expect(gameboard.fleet).toContain(ship2);
+        expect(gameboard.fleet.length).toBe(2);
+    });
+
     test("do not allow placing ships outside the gameboard", () => {
         expect(() => gameboard.placeShip(["M1", "M2"])).toThrow("Invalid coordinate");
         expect(() => gameboard.placeShip(["A13", "B13"])).toThrow("Invalid coordinate");
@@ -33,11 +39,13 @@ describe("Gameboard class with updated Ship implementation", () => {
         const result = gameboard.receivedAttackAt("A1");
         expect(result).toBe("hit");
         expect(ship1.totalHits.has("A1")).toBe(true);
+        expect(gameboard.missedShots.has("A1")).toBe(false);
     });
 
     test("record a miss when an attack does not hit any ship", () => {
         const result = gameboard.receivedAttackAt("C1");
         expect(result).toBe("miss");
+        expect(ship1.totalHits.has("C1")).toBe(false);
         expect(gameboard.missedShots.has("C1")).toBe(true);
     });
 

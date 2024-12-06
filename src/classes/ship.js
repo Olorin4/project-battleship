@@ -7,12 +7,11 @@ export class Ship {
     constructor(coordinates) {
         this.position = coordinates; // Array of coordinates, e.g., ["A1", "A2", "A3"]
         this.totalHits = new Set(); // Tracks coordinates hit
+        console.log("Ship created with coordinates:", this.position);
     }
 
     hitAt(coordinate) {
-        if (this.position.includes(coordinate)) {
-            this.totalHits.add(coordinate);
-        }
+        if (this.position.includes(coordinate)) this.totalHits.add(coordinate);
     }
 
     isSunk() {
