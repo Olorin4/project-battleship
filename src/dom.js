@@ -15,7 +15,7 @@ export function render(player, opponent) {
                 if (ship.position.includes(coordinate)) cell.classList.add("ship");
             });
             if (player.type === "computer") {
-                // cell.classList.remove("ship");
+                cell.classList.remove("ship");
                 cell.addEventListener("click", (event) => {
                     playerAttack(opponent, player, event.target);
                 });

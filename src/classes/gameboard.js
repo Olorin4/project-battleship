@@ -21,7 +21,7 @@ export class Gameboard {
         for (let row = 0; row < this.size; row++) {
             const rowData = [];
             for (let col = 1; col <= this.size; col++) {
-                const coordinate = `${alphabet[row]}${col}`; // Generate coordinates like A1, B2, C10, etc.
+                const coordinate = `${alphabet[row]}${col}`;
                 rowData.push(coordinate);
             }
             board.push(rowData);
@@ -54,9 +54,6 @@ export class Gameboard {
         coordinates.forEach(this.validate.bind(this));
         const newShip = new Ship(coordinates);
         this.fleet.push(newShip);
-        console.log(
-            `${this.type} fleet after placement: ${this.fleet.map((ship) => ship.position)}`
-        );
         return newShip;
     }
 
