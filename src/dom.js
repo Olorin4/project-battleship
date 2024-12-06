@@ -27,21 +27,22 @@ export function render(player, opponent) {
 function playerAttack(player, opponent, cell) {
     try {
         const { coordinate, result } = player.attack(opponent, cell.dataset.coordinate);
-        console.log(`${player.type} attacks ${coordinate}: ${result}`);
+        renderMessage(`${player.type} attacks ${coordinate}: ${result}`);
         // Update the UI based on the attack result
         cell.classList.add(result);
-        if (opponent.gameboard.fleetSunk()) alert("Congratulations! You sunk all enemy ships!");
+        if (opponent.gameboard.fleetSunk())
+            renderMessage("Congratulations! You sunk all enemy ships!");
         else computerAttack(opponent, player);
     } catch (error) {
         // Handle errors from the `player.attack` method
-        alert(error.message);
+        renderMessage(error.message);
     }
 }
 
 function computerAttack(computer, player) {
     // Simulate computer attack
     const { coordinate, result } = computer.attack(player);
-    console.log(`${computer.type} attacks ${coordinate}: ${result}`);
+    renderMessage(`${computer.type} attacks ${coordinate}: ${result}`);
     // Find and update the corresponding cell in the player's board
     const playerBoard = document.getElementById("human-board");
     const cell = [...playerBoard.querySelectorAll(".cell")].find(
@@ -49,5 +50,17 @@ function computerAttack(computer, player) {
     );
     cell.classList.add(result);
     // Check if the game is over
-    if (player.gameboard.fleetSunk()) alert("Defeat! Your fleet is sunk!");
+    if (player.gameboard.fleetSunk()) renderMessage("Defeat! Your fleet is sunk!");
+}
+
+function renderMessage(message) {
+    const messageDiv = document.getElementById("message");
+    const newMessage = document.createElement("p");
+    newMessage.textContent = message;
+    messageDiv.appendChild(newMessage);
+    // If there are more than two messages, remove the oldest one
+    const messages = messageDiv.getElementsByTagName("p");
+    if (messages.length > 2) {
+        messageDiv.removeChild(messages[0]); // Remove the first (oldest) message
+    }
 }
